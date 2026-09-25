@@ -1,0 +1,28 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Julia e Fabio//Casamento//PT-BR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VTIMEZONE
+TZID:America/Recife
+X-LIC-LOCATION:America/Recife
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:-0300
+TZOFFSETTO:-0300
+TZNAME:-03
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:casamento-julia-fabio-20270117@fabiojuliosantos.github.io
+DTSTAMP:20260925T120000Z
+DTSTART;TZID=America/Recife:20270117T143000
+DTEND;TZID=America/Recife:20270117T210000
+SUMMARY:Casamento de Julia e Fábio
+DESCRIPTION:Venha celebrar conosco! Convite: https://fabiojuliosantos.github.io/casamentojuliaefabio/
+LOCATION:Azura Recepções\, Avenida José Francisco de Santana\, 6\, Janga\, Paulista - PE\, 53435-320
+URL:https://fabiojuliosantos.github.io/casamentojuliaefabio/
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR

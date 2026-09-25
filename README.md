@@ -7,11 +7,19 @@ Hotsite para o casamento de Julia e Fábio, em 17 de janeiro de 2027. O projeto 
 - Fonte de dados: a planilha existente; nenhuma planilha nova é criada.
 - API: busca por nome e atualização de RSVP em `apps-script/Code.gs`.
 - Testes locais: `apps-script/test-local.js`, sem nomes ou dados da lista real.
-- Frontend: página responsiva em `index.html`, conectada ao Web App publicado.
+- Frontend: página responsiva em `index.html`, conectada ao Web App publicado e com assets otimizados para o GitHub Pages.
 
-## Executar o frontend localmente
+## Preparar e executar o frontend localmente
 
-O site não exige build nem dependências. Na raiz do projeto, execute:
+Os arquivos-fonte continuam em `app.js` e `styles.css`. Antes de publicar mudanças
+nesses arquivos, instale as dependências e gere as versões minificadas:
+
+```bash
+npm ci
+npm run build
+```
+
+Depois, na raiz do projeto, execute:
 
 ```bash
 python3 -m http.server 4173
@@ -19,11 +27,30 @@ python3 -m http.server 4173
 
 Depois acesse `http://localhost:4173`. A URL pública do Apps Script fica em `CONFIG.apiUrl`, no início de `app.js`.
 
-A lista de presentes aponta para a página de Julia e Fábio na Ferreira Costa. O botão de localização usa uma busca do Google Maps por `Azura Recepções`; ele também pode ser trocado por um endereço exato quando estiver disponível.
+A ação “Lista de presentes” leva primeiro à seção explicativa do site, onde fica o
+link externo para a Ferreira Costa. A ação “Como chegar” leva à seção da Azura
+Recepções, com endereço, rota no Google Maps e o Instagram oficial do espaço.
+O card da data permite criar o evento das 14h30 às 21h no Google Agenda ou baixar
+um arquivo `.ics` compatível com Apple Calendar, Outlook e outros calendários.
 
-Os nomes e monogramas usam a fonte local `assets/Parfumerie-Script-W00-Regular.ttf`, registrada com `@font-face` no início de `styles.css`. `Parisienne` permanece como fallback caso o arquivo não possa ser carregado.
+Os nomes e monogramas usam a fonte local subsetada
+`assets/Parfumerie-Script-subset.woff2`, registrada com `@font-face` no início de
+`styles.css`. Ela contém somente os caracteres usados nos nomes e monogramas da
+página; se esse texto for alterado, o subset também deve ser regenerado.
 
-A guirlanda das iniciais usa `assets/blue-watercolor-wreath.png`, extraída da linguagem botânica do convite de referência com fundo transparente. A citação abaixo da foto usa Cormorant Garamond em itálico para manter a leitura confortável.
+Cormorant Garamond e Manrope também são servidas localmente como fontes variáveis
+WOFF2 na pasta `assets/fonts`. Isso evita conexões com o Google Fonts e mantém os
+pesos de 400 a 600 em um único arquivo por família. As licenças SIL Open Font
+License de ambas acompanham os arquivos na mesma pasta.
+
+A guirlanda e os elementos botânicos usam WebP redimensionado com transparência. Os
+PNGs originais permanecem no repositório como fontes de alta resolução. A citação
+abaixo da foto usa Cormorant Garamond em itálico para manter a leitura confortável.
+
+O `index.html` referencia `app.min.js` e `styles.min.css`, que são gerados pelo
+esbuild e devem ser versionados junto com os arquivos-fonte. O GitHub Pages pode
+continuar publicando diretamente a raiz do branch, sem uma etapa adicional no
+servidor.
 
 ## Estrutura real encontrada
 

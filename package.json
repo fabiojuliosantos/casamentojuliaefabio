@@ -1,0 +1,13 @@
+{
+  "name": "casamento-julia-e-fabio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check:build": "npm run build && git diff --exit-code -- app.min.js styles.min.css"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

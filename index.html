@@ -10,14 +10,15 @@
     >
     <title>Julia &amp; Fábio — 17 de janeiro de 2027</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&amp;family=Manrope:wght@400;500;600&amp;family=Parisienne&amp;display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="assets/Parfumerie-Script-subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     >
-    <link rel="stylesheet" href="styles.css">
-    <script src="app.js" defer></script>
+    <link rel="stylesheet" href="styles.min.css">
+    <script src="app.min.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
@@ -37,7 +38,11 @@
       <section class="hero" id="inicio" aria-labelledby="titulo-principal">
         <img
           class="hero-floral hero-floral--top"
-          src="assets/blue-watercolor-botanical.png"
+          src="assets/blue-watercolor-botanical.webp"
+          width="1200"
+          height="600"
+          decoding="async"
+          fetchpriority="low"
           alt=""
           aria-hidden="true"
         >
@@ -65,9 +70,7 @@
           <div class="hero-actions" aria-label="Ações do convite">
             <a
               class="action-link"
-              href="https://www.google.com/maps/search/?api=1&amp;query=Azura+Recep%C3%A7%C3%B5es"
-              target="_blank"
-              rel="noreferrer"
+              href="#local"
             >
               <span class="action-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24"><path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Zm0-8.5A2.5 2.5 0 1 1 12 7a2.5 2.5 0 0 1 0 5.5Z"/></svg>
@@ -77,9 +80,7 @@
 
             <a
               class="action-link"
-              href="https://www.ferreiracosta.com/lista-de-casamento/presentes/fabiojulioejulia"
-              target="_blank"
-              rel="noreferrer"
+              href="#presentes"
             >
               <span class="action-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24"><path d="M20 11v9H4v-9m-2-5h20v5H2V6Zm10 14V6m0 0H8.7A2.7 2.7 0 1 1 12 2.3V6Zm0 0h3.3A2.7 2.7 0 1 0 12 2.3V6Z"/></svg>
@@ -113,7 +114,11 @@
       <section class="details-section section" id="detalhes" aria-labelledby="detalhes-titulo">
         <img
           class="section-floral section-floral--left"
-          src="assets/blue-watercolor-botanical.png"
+          src="assets/blue-watercolor-botanical.webp"
+          width="1200"
+          height="600"
+          loading="lazy"
+          decoding="async"
           alt=""
           aria-hidden="true"
         >
@@ -130,22 +135,64 @@
               <h3>Janeiro de 2027</h3>
               <p>Domingo, com início às 14h30.</p>
             </div>
+            <div class="calendar-actions">
+              <span class="calendar-label">Adicionar ao calendário</span>
+              <div class="calendar-links">
+                <a
+                  class="calendar-link"
+                  href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Casamento+de+Julia+e+F%C3%A1bio&amp;dates=20270117T143000%2F20270117T210000&amp;ctz=America%2FRecife&amp;details=Venha+celebrar+conosco%21+Convite%3A+https%3A%2F%2Ffabiojuliosantos.github.io%2Fcasamentojuliaefabio%2F&amp;location=Azura+Recep%C3%A7%C3%B5es%2C+Avenida+Jos%C3%A9+Francisco+de+Santana%2C+6%2C+Janga%2C+Paulista+-+PE&amp;sf=true"
+                  target="_blank"
+                  rel="noreferrer"
+                >Google</a>
+                <a
+                  class="calendar-link"
+                  href="assets/casamento-julia-e-fabio.ics"
+                  download
+                >Apple / Outlook</a>
+              </div>
+            </div>
           </article>
+        </div>
+      </section>
 
-          <article class="detail-card">
-            <span class="detail-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Zm0-8.5A2.5 2.5 0 1 1 12 7a2.5 2.5 0 0 1 0 5.5Z"/></svg>
-            </span>
-            <div>
-              <h3>Azura Recepções</h3>
-              <p>Cerimônia e recepção no mesmo local.</p>
+      <section class="venue-section section" id="local" aria-labelledby="local-titulo">
+        <div class="venue-card">
+          <div class="venue-copy">
+            <p class="eyebrow">Cerimônia e recepção</p>
+            <h2 id="local-titulo">Azura Recepções</h2>
+            <p>
+              Nosso grande dia será celebrado à beira-mar. Consulte o endereço e
+              trace a melhor rota antes de sair.
+            </p>
+          </div>
+
+          <div class="venue-details">
+            <div class="venue-address">
+              <span class="venue-pin" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Zm0-8.5A2.5 2.5 0 1 1 12 7a2.5 2.5 0 0 1 0 5.5Z"/></svg>
+              </span>
+              <address>
+                <strong>Avenida José Francisco de Santana, 6</strong>
+                <span>Janga · Paulista – PE</span>
+                <span>CEP 53435-320</span>
+              </address>
+            </div>
+
+            <div class="venue-actions">
               <a
-                href="https://www.google.com/maps/search/?api=1&amp;query=Azura+Recep%C3%A7%C3%B5es"
+                class="venue-link venue-link--primary"
+                href="https://www.google.com/maps/search/?api=1&amp;query=Azura+Recep%C3%A7%C3%B5es%2C+Avenida+Jos%C3%A9+Francisco+de+Santana%2C+6%2C+Janga%2C+Paulista%2C+PE"
                 target="_blank"
                 rel="noreferrer"
               >Abrir no mapa <span aria-hidden="true">↗</span></a>
+              <a
+                class="venue-link"
+                href="https://www.instagram.com/azurarecepcoes/"
+                target="_blank"
+                rel="noreferrer"
+              >Ver Instagram <span aria-hidden="true">↗</span></a>
             </div>
-          </article>
+          </div>
         </div>
       </section>
 
@@ -174,14 +221,17 @@
       <section class="rsvp-section section" id="confirmacao" aria-labelledby="rsvp-titulo">
         <img
           class="section-floral section-floral--right"
-          src="assets/blue-watercolor-botanical.png"
+          src="assets/blue-watercolor-botanical.webp"
+          width="1200"
+          height="600"
+          loading="lazy"
+          decoding="async"
           alt=""
           aria-hidden="true"
         >
 
         <div class="rsvp-shell">
           <div class="rsvp-intro">
-            <p class="eyebrow">RSVP</p>
             <h2 id="rsvp-titulo">Você vem celebrar conosco?</h2>
             <p>
               Digite seu nome como está no convite. Depois, selecione o seu cadastro e
