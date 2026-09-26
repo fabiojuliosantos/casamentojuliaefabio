@@ -26,7 +26,10 @@ const elements = {
   countdownHours: document.querySelector('#countdown-hours'),
   countdownMinutes: document.querySelector('#countdown-minutes'),
   pixCopyButton: document.querySelector('#pix-copy-button'),
-  pixCopyStatus: document.querySelector('#pix-copy-status'),
+  pixToast: document.querySelector('#pix-toast'),
+  pixToastIcon: document.querySelector('#pix-toast-icon'),
+  pixToastTitle: document.querySelector('#pix-toast-title'),
+  pixToastMessage: document.querySelector('#pix-toast-message'),
 };
 
 const state = {
@@ -34,6 +37,8 @@ const state = {
   selectedGuest: null,
   busy: false,
 };
+
+let pixToastTimeout;
 
 const STATUS_LABELS = Object.freeze({
   PENDENTE: 'Aguardando resposta',
@@ -283,14 +288,33 @@ async function copyPixCode(text) {
   copyWithFallback(text);
 }
 
+function showPixToast(title, message, type = 'success') {
+  window.clearTimeout(pixToastTimeout);
+  elements.pixToast.classList.remove('is-visible');
+  elements.pixToast.classList.toggle('is-error', type === 'error');
+  elements.pixToastIcon.textContent = type === 'error' ? '!' : '✓';
+  elements.pixToastTitle.textContent = title;
+  elements.pixToastMessage.textContent = message;
+  elements.pixToast.setAttribute('aria-hidden', 'false');
+
+  window.requestAnimationFrame(() => {
+    elements.pixToast.classList.add('is-visible');
+  });
+
+  pixToastTimeout = window.setTimeout(() => {
+    elements.pixToast.classList.remove('is-visible');
+    elements.pixToast.setAttribute('aria-hidden', 'true');
+  }, 3600);
+}
+
 elements.pixCopyButton.addEventListener('click', async () => {
   elements.pixCopyButton.disabled = true;
 
   try {
     await copyPixCode(CONFIG.pixCode);
-    elements.pixCopyStatus.textContent = 'Código Pix copiado! Abra o app do seu banco para colar.';
+    showPixToast('Pix do Banco do Brasil copiado!', 'Agora é só colar o código no app do seu banco.');
   } catch (error) {
-    elements.pixCopyStatus.textContent = 'Não foi possível copiar automaticamente. Tente novamente.';
+    showPixToast('Não foi possível copiar', 'Tente novamente em alguns instantes.', 'error');
   } finally {
     elements.pixCopyButton.disabled = false;
   }
