@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "check:build": "npm run build && git diff --exit-code -- app.min.js styles.min.css"
+    "check:build": "npm run build && git diff --exit-code -- app.min.js styles.min.css",
+    "test:apps-script": "node apps-script/test-local.js"
   },
   "devDependencies": {
     "esbuild": "^0.28.2"

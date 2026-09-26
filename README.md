@@ -216,7 +216,16 @@ O Apps Script e o redirecionamento do `ContentService` acrescentam latência que
 
 A primeira busca após o cache expirar ainda precisa ler e validar a planilha. As buscas seguintes evitam essa leitura enquanto o Google mantiver o item em cache. Alterações manuais na planilha podem levar até cinco minutos para aparecer na busca; alterações feitas pela própria API são refletidas imediatamente.
 
-Na gravação, `Status` e `ConfirmadoEm` são atualizados juntos quando as colunas estão adjacentes, como na estrutura oficial. Isso reduz as operações remotas sem remover o lock ou as validações de segurança.
+O cache guarda também a linha de cada ID. Durante um RSVP, essa linha é usada apenas
+depois que o script obtém o lock e confere o ID diretamente na planilha. Se uma linha
+tiver sido inserida ou removida manualmente, o atalho é descartado e a lista é lida
+novamente antes da gravação.
+
+Nas leituras frias, as propriedades do script são buscadas uma única vez e somente
+as colunas operacionais são carregadas; colunas de totais e `ConfirmadoEm` ficam fora
+do índice de busca. Na gravação oficial, `Status` e `ConfirmadoEm` são enviados juntos
+por uma única chamada `setValues`, sem leitura prévia, e `SpreadsheetApp.flush()` é
+executado antes da liberação do lock.
 
 Nos testes via `curl`, não use `-X POST`: `--data` já seleciona POST na primeira chamada, e o `curl -L` precisa converter o redirecionamento do Google em GET para receber o JSON final.
 
@@ -228,11 +237,15 @@ Os testes usam apenas Node.js nativo e uma planilha em memória:
 node apps-script/test-local.js
 ```
 
+O mesmo teste também pode ser executado com `npm run test:apps-script`.
+
 Eles cobrem:
 
 - busca com e sem acento;
 - busca parcial e por múltiplos termos (`JOAO SILVA` encontra `João da Silva`);
 - reutilização e sincronização do cache de busca;
+- caminho rápido de RSVP e fallback seguro quando uma linha é movida;
+- quantidade e largura das leituras feitas na planilha em memória;
 - resultado vazio e múltiplos resultados;
 - identificação apenas para homônimos;
 - leitura de `CONFIRMADO` e `NÃO VAI`;
