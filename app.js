@@ -3,6 +3,7 @@
 const CONFIG = Object.freeze({
   apiUrl: 'https://script.google.com/macros/s/AKfycbwByHlOPEn9ovfk8wtLbEhJdu5bDRHNxyge1NCaQfkSxf3W0xAeRpvQpUAuo70RgCji/exec',
   weddingDate: '2027-01-17T14:30:00-03:00',
+  pixCode: '00020126650014br.gov.bcb.pix0126dimep.pagamentos@bb.com.br0213COFRINHO BB 15204000053039865802BR5913DIRECAO GERAL6008BRASILIA62290525JUh6ag7INw1vbGlvn9RDj6Ppl6304C718',
 });
 
 const elements = {
@@ -24,6 +25,8 @@ const elements = {
   countdownDays: document.querySelector('#countdown-days'),
   countdownHours: document.querySelector('#countdown-hours'),
   countdownMinutes: document.querySelector('#countdown-minutes'),
+  pixCopyButton: document.querySelector('#pix-copy-button'),
+  pixCopyStatus: document.querySelector('#pix-copy-status'),
 };
 
 const state = {
@@ -252,6 +255,46 @@ function updateCountdown() {
 
 updateCountdown();
 window.setInterval(updateCountdown, 60000);
+
+function copyWithFallback(text) {
+  const temporaryInput = document.createElement('textarea');
+  temporaryInput.value = text;
+  temporaryInput.setAttribute('readonly', '');
+  temporaryInput.style.position = 'fixed';
+  temporaryInput.style.opacity = '0';
+  document.body.appendChild(temporaryInput);
+  temporaryInput.select();
+
+  const copied = document.execCommand('copy');
+  temporaryInput.remove();
+  if (!copied) throw new Error('Não foi possível copiar o código Pix.');
+}
+
+async function copyPixCode(text) {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return;
+    } catch (error) {
+      // Alguns navegadores bloqueiam a API mesmo quando ela está disponível.
+    }
+  }
+
+  copyWithFallback(text);
+}
+
+elements.pixCopyButton.addEventListener('click', async () => {
+  elements.pixCopyButton.disabled = true;
+
+  try {
+    await copyPixCode(CONFIG.pixCode);
+    elements.pixCopyStatus.textContent = 'Código Pix copiado! Abra o app do seu banco para colar.';
+  } catch (error) {
+    elements.pixCopyStatus.textContent = 'Não foi possível copiar automaticamente. Tente novamente.';
+  } finally {
+    elements.pixCopyButton.disabled = false;
+  }
+});
 
 function scrollToHashSection() {
   const sectionId = window.location.hash.slice(1);

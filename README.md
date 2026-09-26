@@ -27,8 +27,9 @@ python3 -m http.server 4173
 
 Depois acesse `http://localhost:4173`. A URL pública do Apps Script fica em `CONFIG.apiUrl`, no início de `app.js`.
 
-A ação “Lista de presentes” leva primeiro à seção explicativa do site, onde fica o
-link externo para a Ferreira Costa. A ação “Como chegar” leva à seção da Azura
+A ação “Presentes ou Pix” leva primeiro à seção explicativa do site, onde ficam o
+link externo para a Ferreira Costa e o botão que copia o código Pix do Cofrinho do BB.
+A ação “Como chegar” leva à seção da Azura
 Recepções, com endereço, rota no Google Maps e o Instagram oficial do espaço.
 O card da data permite criar o evento das 14h30 às 21h no Google Agenda ou baixar
 um arquivo `.ics` compatível com Apple Calendar, Outlook e outros calendários.

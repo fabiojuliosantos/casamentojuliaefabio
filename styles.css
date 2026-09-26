@@ -737,15 +737,22 @@ h1 span {
   width: 2.5rem;
 }
 
+.gift-actions {
+  display: grid;
+  gap: 0.75rem;
+}
+
 .gift-link {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.4rem;
   padding: 0.8rem 1rem;
   color: var(--white);
   background: var(--ochre);
   border: 1px solid var(--ochre);
   border-radius: 999px;
+  cursor: pointer;
   font-family: var(--sans);
   font-size: 0.78rem;
   font-weight: 600;
@@ -756,10 +763,38 @@ h1 span {
   transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
 }
 
+.gift-link:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
 .gift-link:hover {
   background: var(--ochre-dark);
   border-color: var(--ochre-dark);
   transform: translateY(-2px);
+}
+
+.gift-link--secondary {
+  color: #f0cd88;
+  background: transparent;
+  border-color: #dcb66d;
+}
+
+.gift-link--secondary:hover {
+  color: var(--navy);
+  background: #f0cd88;
+  border-color: #f0cd88;
+}
+
+.pix-copy-status {
+  max-width: 15rem;
+  min-height: 2.4em;
+  margin: -0.15rem auto 0;
+  color: #ffffffd9 !important;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  line-height: 1.35;
+  text-align: center;
 }
 
 .rsvp-section {
@@ -1306,8 +1341,12 @@ footer time {
   }
 
   .gift-ribbon,
-  .gift-link {
+  .gift-actions {
     justify-self: center;
+  }
+
+  .gift-actions {
+    width: min(100%, 19rem);
   }
 
   .search-row {
