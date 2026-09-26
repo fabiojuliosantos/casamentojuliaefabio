@@ -788,9 +788,9 @@ h1 span {
 
 .pix-toast {
   position: fixed;
-  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  top: max(1rem, env(safe-area-inset-top));
   left: 50%;
-  z-index: 100;
+  z-index: 1000;
   display: flex;
   align-items: center;
   gap: 0.9rem;
@@ -803,15 +803,13 @@ h1 span {
   box-shadow: 0 18px 50px rgba(20, 29, 45, 0.24);
   opacity: 0;
   pointer-events: none;
-  transform: translate(-50%, 1.5rem) scale(0.96);
-  visibility: hidden;
-  transition: opacity 240ms ease, transform 360ms cubic-bezier(0.2, 0.85, 0.25, 1.15), visibility 240ms;
+  transform: translate(-50%, -1.5rem) scale(0.96);
+  transition: opacity 240ms ease, transform 360ms cubic-bezier(0.2, 0.85, 0.25, 1.15);
 }
 
 .pix-toast.is-visible {
   opacity: 1;
   transform: translate(-50%, 0) scale(1);
-  visibility: visible;
 }
 
 .pix-toast__icon {
@@ -856,6 +854,17 @@ h1 span {
 .pix-toast.is-error .pix-toast__icon {
   background: #9d3e3e;
   box-shadow: 0 8px 20px rgba(157, 62, 62, 0.25);
+}
+
+.pix-toast.is-loading .pix-toast__icon {
+  animation: pix-toast-pulse 900ms ease-in-out infinite alternate;
+}
+
+@keyframes pix-toast-pulse {
+  to {
+    transform: scale(1.08);
+    box-shadow: 0 10px 24px rgba(183, 131, 51, 0.42);
+  }
 }
 
 .rsvp-section {

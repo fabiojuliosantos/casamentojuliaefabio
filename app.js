@@ -266,9 +266,14 @@ function copyWithFallback(text) {
   temporaryInput.value = text;
   temporaryInput.setAttribute('readonly', '');
   temporaryInput.style.position = 'fixed';
+  temporaryInput.style.top = '0';
+  temporaryInput.style.left = '0';
+  temporaryInput.style.fontSize = '16px';
   temporaryInput.style.opacity = '0';
   document.body.appendChild(temporaryInput);
+  temporaryInput.focus();
   temporaryInput.select();
+  temporaryInput.setSelectionRange(0, temporaryInput.value.length);
 
   const copied = document.execCommand('copy');
   temporaryInput.remove();
@@ -288,27 +293,34 @@ async function copyPixCode(text) {
   copyWithFallback(text);
 }
 
-function showPixToast(title, message, type = 'success') {
+function showPixToast(title, message, type = 'success', duration = 3600) {
   window.clearTimeout(pixToastTimeout);
-  elements.pixToast.classList.remove('is-visible');
+  elements.pixToast.classList.remove('is-visible', 'is-error', 'is-loading');
   elements.pixToast.classList.toggle('is-error', type === 'error');
-  elements.pixToastIcon.textContent = type === 'error' ? '!' : '✓';
+  elements.pixToast.classList.toggle('is-loading', type === 'loading');
+  elements.pixToastIcon.textContent = type === 'error' ? '!' : type === 'loading' ? '…' : '✓';
   elements.pixToastTitle.textContent = title;
   elements.pixToastMessage.textContent = message;
   elements.pixToast.setAttribute('aria-hidden', 'false');
 
-  window.requestAnimationFrame(() => {
-    elements.pixToast.classList.add('is-visible');
-  });
+  // Força o navegador móvel a registrar o estado inicial antes da animação.
+  void elements.pixToast.offsetWidth;
+  elements.pixToast.classList.add('is-visible');
 
   pixToastTimeout = window.setTimeout(() => {
     elements.pixToast.classList.remove('is-visible');
     elements.pixToast.setAttribute('aria-hidden', 'true');
-  }, 3600);
+  }, duration);
 }
 
 elements.pixCopyButton.addEventListener('click', async () => {
   elements.pixCopyButton.disabled = true;
+  showPixToast(
+    'Copiando Pix do Banco do Brasil…',
+    'Aguarde um instante.',
+    'loading',
+    8000
+  );
 
   try {
     await copyPixCode(CONFIG.pixCode);
